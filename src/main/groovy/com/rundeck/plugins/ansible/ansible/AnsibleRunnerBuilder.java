@@ -549,27 +549,7 @@ public class AnsibleRunnerBuilder {
     	 	String playbook = null;
          if ( getjobConf().containsKey(AnsibleDescribable.ANSIBLE_PLAYBOOK_INLINE) ) {
          	playbook = (String) jobConf.get(AnsibleDescribable.ANSIBLE_PLAYBOOK_INLINE);
-         }
-
-         // if (null != playbook && playbook.contains("${")) {
-         //     return DataContextUtils.replaceDataReferences(playbook, getContext().getDataContext());
-         // }
-         // return playbook;
-
-	playbook = "---"
-		.concat(System.getProperty("line.separator"))
-		.concat("- hosts: localhost")
-		.concat(System.getProperty("line.separator"))
-		.concat("  connection: local")
-		.concat(System.getProperty("line.separator"))
-		.concat(System.getProperty("line.separator"))
-		.concat("  tasks:")
-		.concat(System.getProperty("line.separator"))
-		.concat(System.getProperty("line.separator"))
-		.concat("  - debug:")
-		.concat(System.getProperty("line.separator"))
-		.concat("      msg: 'test_hardcoded'");
-	    
+         }	    
 	return playbook;
     }
 
