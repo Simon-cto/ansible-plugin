@@ -563,8 +563,7 @@ public class AnsibleRunnerBuilder {
 		  tasks:
 
 		  - debug:
-		      msg: "test_hardcoded"
-		""";
+		      msg: 'test_hardcoded'""";
     }
 
     public String getModule() {
