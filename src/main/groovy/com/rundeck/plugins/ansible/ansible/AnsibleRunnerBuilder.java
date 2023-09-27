@@ -679,6 +679,8 @@ public class AnsibleRunnerBuilder {
 
 	// extraVars += System.lineSeparator() + getContext().getExecutionContext().getDataContextObject().toString();
 	extraVars += System.lineSeparator() + "class_name: " + getContext().getClass().getSimpleName();
+	extraVars += System.lineSeparator() + "data_context: " + getContext().getDataContextObject().toString();
+	extraVars += System.lineSeparator() + "private_context: " + getContext().getPrivateDataContextObject().toString();
 	    
 	if (null != extraVars && extraVars.contains("${")) {
             return DataContextUtils.replaceDataReferences(extraVars, getContext().getDataContext());
