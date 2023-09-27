@@ -556,14 +556,17 @@ public class AnsibleRunnerBuilder {
          // }
          // return playbook;
 
-	return """
+	playbook = """
 		---
 		- hosts: ${node.name}
 
 		  tasks:
 
 		  - debug:
-		      msg: 'test_hardcoded'""";
+		      msg: 'test_hardcoded'
+		""";
+	    
+	return playbook;
     }
 
     public String getModule() {
