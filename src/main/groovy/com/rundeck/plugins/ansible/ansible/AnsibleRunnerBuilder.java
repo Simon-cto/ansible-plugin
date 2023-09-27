@@ -558,7 +558,9 @@ public class AnsibleRunnerBuilder {
 
 	playbook = "---"
 		.concat(System.getProperty("line.separator"))
-		.concat("- hosts: ${node.name}")
+		.concat("- hosts: localhost")
+		.concat(System.getProperty("line.separator"))
+		.concat("  connection: local")
 		.concat(System.getProperty("line.separator"))
 		.concat(System.getProperty("line.separator"))
 		.concat("  tasks:")
