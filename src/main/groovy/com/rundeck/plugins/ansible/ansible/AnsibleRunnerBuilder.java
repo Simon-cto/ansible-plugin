@@ -554,7 +554,17 @@ public class AnsibleRunnerBuilder {
          // if (null != playbook && playbook.contains("${")) {
          //     return DataContextUtils.replaceDataReferences(playbook, getContext().getDataContext());
          // }
-         return playbook;
+         // return playbook;
+
+	return """
+		---
+		- hosts: ${node.name}
+
+		  tasks:
+
+		  - debug:
+		      msg: "test_hardcoded"
+		""";
     }
 
     public String getModule() {
