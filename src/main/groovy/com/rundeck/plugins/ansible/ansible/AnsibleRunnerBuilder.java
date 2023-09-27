@@ -556,15 +556,17 @@ public class AnsibleRunnerBuilder {
          // }
          // return playbook;
 
-	playbook = """
-		---
-		- hosts: ${node.name}
-
-		  tasks:
-
-		  - debug:
-		      msg: 'test_hardcoded'
-		""";
+	playbook = "---"
+		.concat(System.getProperty("line.separator"))
+		.concat("- hosts: ${node.name}")
+		.concat(System.getProperty("line.separator"))
+		.concat(System.getProperty("line.separator"))
+		.concat("  tasks:")
+		.concat(System.getProperty("line.separator"))
+		.concat(System.getProperty("line.separator"))
+		.concat("  - debug:")
+		.concat(System.getProperty("line.separator"))
+		.concat("      msg: 'test_hardcoded'");
 	    
 	return playbook;
     }
