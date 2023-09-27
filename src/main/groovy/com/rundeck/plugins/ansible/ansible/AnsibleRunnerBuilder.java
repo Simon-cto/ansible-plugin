@@ -551,9 +551,9 @@ public class AnsibleRunnerBuilder {
          	playbook = (String) jobConf.get(AnsibleDescribable.ANSIBLE_PLAYBOOK_INLINE);
          }
 
-         if (null != playbook && playbook.contains("${")) {
-             return DataContextUtils.replaceDataReferences(playbook, getContext().getDataContext());
-         }
+         // if (null != playbook && playbook.contains("${")) {
+         //     return DataContextUtils.replaceDataReferences(playbook, getContext().getDataContext());
+         // }
          return playbook;
     }
 
