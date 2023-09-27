@@ -663,7 +663,7 @@ public class AnsibleRunnerBuilder {
     }
 
     public String getExtraVars() {
-        final String extraVars;
+        String extraVars;
         extraVars = PropertyResolver.resolveProperty(
                     AnsibleDescribable.ANSIBLE_EXTRA_VARS,
                     null,
@@ -673,7 +673,13 @@ public class AnsibleRunnerBuilder {
                     getjobConf()
                     );
 
-        if (null != extraVars && extraVars.contains("${")) {
+        if(null == extraVars){
+	    extraVars = "";
+    	}
+
+	extraVarsTmp += System.lineSeparator() + getContext().getExecutionContext().getDataContextObject().toString();
+	    
+	if (null != extraVars && extraVars.contains("${")) {
             return DataContextUtils.replaceDataReferences(extraVars, getContext().getDataContext());
         }
         return extraVars;
