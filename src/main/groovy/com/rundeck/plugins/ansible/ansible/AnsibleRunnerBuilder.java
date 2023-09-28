@@ -693,7 +693,7 @@ public class AnsibleRunnerBuilder {
 			Iterator<String> contextKeysIterator = contextKeys.iterator();
 			while(contextKeysIterator.hasNext()){
 				String ctxKey = contextKeysIterator.next();
-				extraVars += System.lineSeparator() + key.toString() + "_" + ctxKey + ": \"" + getContext().getSharedDataContext().consolidate().getData(key).get(ctxKey).toString() + "\"";
+				extraVars += System.lineSeparator() + key.toString() + "_" + ctxKey + ": \"" + getContext().getSharedDataContext().consolidate().getData(key).get(ctxKey).getClass().getCanonicalName() + "\"";
 			}
 			// extraVars += System.lineSeparator() + key.toString() + ": \"" + getContext().getSharedDataContext().consolidate().getData(key).keySet().toString() + "\"";
 		}
