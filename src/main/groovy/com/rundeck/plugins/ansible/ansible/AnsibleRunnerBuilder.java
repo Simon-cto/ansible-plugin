@@ -31,6 +31,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 import java.util.Iterator;
+import java.util.ArrayList;
 
 import org.rundeck.storage.api.PathUtil;
 import org.rundeck.storage.api.StorageException;
@@ -688,13 +689,47 @@ public class AnsibleRunnerBuilder {
 		Set<ContextView> sharedDataContextKeys = getContext().getSharedDataContext().consolidate().getKeys();
 		Iterator<ContextView> keysIterator = sharedDataContextKeys.iterator();
 		while(keysIterator.hasNext()){
-			ContextView key = keysIterator.next();
-			Set<String> contextKeys = getContext().getSharedDataContext().consolidate().getData(key).keySet();
-			Iterator<String> contextKeysIterator = contextKeys.iterator();
-			while(contextKeysIterator.hasNext()){
-				String ctxKey = contextKeysIterator.next();
-				extraVars += System.lineSeparator() + key.toString() + "_" + ctxKey + ": \"" + getContext().getSharedDataContext().consolidate().getData(key).get(ctxKey).keySet().toString() + "\"";
+			ContextView contextKey = keysIterator.next();
+			Map<String, String> dataContextMap = getContext().getSharedDataContext().consolidate().getData(contextKey).get('data');
+			Map<String, String> exportContextMap = getContext().getSharedDataContext().consolidate().getData(contextKey).get('export');
+			Map<String, String> optionContextMap = getContext().getSharedDataContext().consolidate().getData(contextKey).get('option');
+
+			if(dataContextMap != null){
+				Set<String> keys = dataContextMap.keySet();
+				Iterator<String> keyIterator = keys.iterator();
+				while(keyIterator.hasNext()){
+					String key = keyIterator.next();
+					extraVars += System.lineSeparator() + key +": \"" + dataContextMap.get(key) +"\"";
+				}
 			}
+
+			if(exportContextMap != null){
+				Set<String> keys = exportContextMap.keySet();
+				Iterator<String> keyIterator = keys.iterator();
+				while(keyIterator.hasNext()){
+					String key = keyIterator.next();
+					extraVars += System.lineSeparator() + key +": \"" + exportContextMap.get(key) +"\"";
+				}
+			}
+
+			if(optionContextMap != null){
+				Set<String> keys = optionContextMap.keySet();
+				Iterator<String> keyIterator = keys.iterator();
+				while(keyIterator.hasNext()){
+					String key = keyIterator.next();
+					extraVars += System.lineSeparator() + key +": \"" + optionContextMap.get(key) +"\"";
+				}
+			}
+
+			extraVars += System.lineSeparator()
+
+			
+			// Set<String> contextKeys = getContext().getSharedDataContext().consolidate().getData(key).keySet();
+			// Iterator<String> contextKeysIterator = contextKeys.iterator();
+			// while(contextKeysIterator.hasNext()){
+			// 	String ctxKey = contextKeysIterator.next();
+			// 	extraVars += System.lineSeparator() + key.toString() + "_" + ctxKey + ": \"" + getContext().getSharedDataContext().consolidate().getData(key).get(ctxKey).keySet().toString() + "\"";
+			// }
 			// extraVars += System.lineSeparator() + key.toString() + ": \"" + getContext().getSharedDataContext().consolidate().getData(key).keySet().toString() + "\"";
 		}
 		// extraVars += System.lineSeparator() + "shared_context: \"" + getContext().getSharedDataContext().consolidate().getData().toString() +"\"";
