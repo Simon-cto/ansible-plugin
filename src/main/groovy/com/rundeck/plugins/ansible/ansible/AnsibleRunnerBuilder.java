@@ -690,9 +690,9 @@ public class AnsibleRunnerBuilder {
 		Iterator<ContextView> keysIterator = sharedDataContextKeys.iterator();
 		while(keysIterator.hasNext()){
 			ContextView contextKey = keysIterator.next();
-			Map<String, String> dataContextMap = getContext().getSharedDataContext().consolidate().getData(contextKey).get('data');
-			Map<String, String> exportContextMap = getContext().getSharedDataContext().consolidate().getData(contextKey).get('export');
-			Map<String, String> optionContextMap = getContext().getSharedDataContext().consolidate().getData(contextKey).get('option');
+			Map<String, String> dataContextMap = getContext().getSharedDataContext().consolidate().getData(contextKey).get("data");
+			Map<String, String> exportContextMap = getContext().getSharedDataContext().consolidate().getData(contextKey).get("export");
+			Map<String, String> optionContextMap = getContext().getSharedDataContext().consolidate().getData(contextKey).get("option");
 
 			if(dataContextMap != null){
 				Set<String> keys = dataContextMap.keySet();
@@ -721,7 +721,7 @@ public class AnsibleRunnerBuilder {
 				}
 			}
 
-			extraVars += System.lineSeparator()
+			extraVars += System.lineSeparator();
 
 			
 			// Set<String> contextKeys = getContext().getSharedDataContext().consolidate().getData(key).keySet();
