@@ -677,15 +677,26 @@ public class AnsibleRunnerBuilder {
                     getjobConf()
                     );
 
-        if(null == extraVars){
-	    extraVars = "";
-    	}
+        Boolean injectContextVars = false;
+	String sinjectContextVars = PropertyResolver.resolveProperty(
+                    AnsibleDescribable.ANSIBLE_INJECT_CONTEXT_VARS_AS_EXTRAVARS,
+		    null,
+                    getFrameworkProject(),
+                    getFramework(),
+                    getNode(),
+                    getjobConf()
+                    );
 
-	// extraVars += System.lineSeparator() + getContext().getExecutionContext().getDataContextObject().toString();
-	extraVars += System.lineSeparator() + "class_name: " + getContext().getClass().getSimpleName();
-	extraVars += System.lineSeparator() + "data_context: " + getContext().getDataContextObject().toString();
-	extraVars += System.lineSeparator() + "private_context: " + getContext().getPrivateDataContextObject().toString();
-	try{
+	if (null != sinjectContextVars) {
+		injectContextVars = Boolean.parseBoolean(sinjectContextVars);
+	}
+	    
+	if(injectContextVars) {
+
+	        if(null == extraVars){
+		    extraVars = "";
+	    	}
+		    
 		Set<ContextView> sharedDataContextKeys = getContext().getSharedDataContext().consolidate().getKeys();
 		Iterator<ContextView> keysIterator = sharedDataContextKeys.iterator();
 		while(keysIterator.hasNext()){
@@ -693,7 +704,7 @@ public class AnsibleRunnerBuilder {
 			Map<String, String> dataContextMap = getContext().getSharedDataContext().consolidate().getData(contextKey).get("data");
 			Map<String, String> exportContextMap = getContext().getSharedDataContext().consolidate().getData(contextKey).get("export");
 			Map<String, String> optionContextMap = getContext().getSharedDataContext().consolidate().getData(contextKey).get("option");
-
+	
 			if(dataContextMap != null){
 				Set<String> keys = dataContextMap.keySet();
 				Iterator<String> keyIterator = keys.iterator();
@@ -702,7 +713,7 @@ public class AnsibleRunnerBuilder {
 					extraVars += System.lineSeparator() + key +": \"" + dataContextMap.get(key) +"\"";
 				}
 			}
-
+	
 			if(exportContextMap != null){
 				Set<String> keys = exportContextMap.keySet();
 				Iterator<String> keyIterator = keys.iterator();
@@ -711,7 +722,7 @@ public class AnsibleRunnerBuilder {
 					extraVars += System.lineSeparator() + key +": \"" + exportContextMap.get(key) +"\"";
 				}
 			}
-
+	
 			if(optionContextMap != null){
 				Set<String> keys = optionContextMap.keySet();
 				Iterator<String> keyIterator = keys.iterator();
@@ -720,23 +731,10 @@ public class AnsibleRunnerBuilder {
 					extraVars += System.lineSeparator() + key +": \"" + optionContextMap.get(key) +"\"";
 				}
 			}
-
-			
-			// Set<String> contextKeys = getContext().getSharedDataContext().consolidate().getData(key).keySet();
-			// Iterator<String> contextKeysIterator = contextKeys.iterator();
-			// while(contextKeysIterator.hasNext()){
-			// 	String ctxKey = contextKeysIterator.next();
-			// 	extraVars += System.lineSeparator() + key.toString() + "_" + ctxKey + ": \"" + getContext().getSharedDataContext().consolidate().getData(key).get(ctxKey).keySet().toString() + "\"";
-			// }
-			// extraVars += System.lineSeparator() + key.toString() + ": \"" + getContext().getSharedDataContext().consolidate().getData(key).keySet().toString() + "\"";
 		}
-		// extraVars += System.lineSeparator() + "shared_context: \"" + getContext().getSharedDataContext().consolidate().getData().toString() +"\"";
+	
+		extraVars += System.lineSeparator();
 	}
-	catch (Exception e){
-		extraVars += System.lineSeparator() + "shared_context: null";
-	}
-
-	extraVars += System.lineSeparator();
 	    
 	if (null != extraVars && extraVars.contains("${")) {
             return DataContextUtils.replaceDataReferences(extraVars, getContext().getDataContext());
