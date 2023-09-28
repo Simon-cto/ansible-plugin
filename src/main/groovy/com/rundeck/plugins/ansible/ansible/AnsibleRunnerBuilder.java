@@ -682,7 +682,7 @@ public class AnsibleRunnerBuilder {
 	extraVars += System.lineSeparator() + "data_context: " + getContext().getDataContextObject().toString();
 	extraVars += System.lineSeparator() + "private_context: " + getContext().getPrivateDataContextObject().toString();
 	try{
-		Set<K> sharedDataContextKeys = getContext().getSharedDataContext().consolidate().geKeys();
+		Set sharedDataContextKeys = getContext().getSharedDataContext().consolidate().geKeys();
 		Iterator keysIterator = sharedDataContextKeys.iterator();
 		while(keysIterator.hasNext()){
 			K key = keyIterator.next();
