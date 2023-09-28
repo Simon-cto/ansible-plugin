@@ -682,7 +682,7 @@ public class AnsibleRunnerBuilder {
 	extraVars += System.lineSeparator() + "data_context: " + getContext().getDataContextObject().toString();
 	extraVars += System.lineSeparator() + "private_context: " + getContext().getPrivateDataContextObject().toString();
 	try{
-		extraVars += System.lineSeparator() + "shared_context: " + getContext().getSharedDataContext().consolidate().getClass().getCanonicalName();
+		extraVars += System.lineSeparator() + "shared_context: " + getContext().getSharedDataContext().getClass().getCanonicalName();
 	}
 	catch (Exception e){
 		extraVars += System.lineSeparator() + "shared_context: null";
