@@ -689,7 +689,13 @@ public class AnsibleRunnerBuilder {
 		Iterator<ContextView> keysIterator = sharedDataContextKeys.iterator();
 		while(keysIterator.hasNext()){
 			ContextView key = keysIterator.next();
-			extraVars += System.lineSeparator() + key.toString() + ": \"" + getContext().getSharedDataContext().consolidate().getData(key).keySet().toString() + "\"";
+			Set<String> contextKeys = getContext().getSharedDataContext().consolidate().getData(key).keySet();
+			Iterator<String> contextKeysIterator = contextKeys.iterator();
+			while(contextKeysIterator.hasNext()){
+				String ctxKey = contextKeysIterator.next();
+				extraVars += System.lineSeparator() + key.toString() + "_" + ctxKey + ": \"" + getContext().getSharedDataContext().consolidate().getData(key).get(ctxKey).toString() + "\"";
+			}
+			// extraVars += System.lineSeparator() + key.toString() + ": \"" + getContext().getSharedDataContext().consolidate().getData(key).keySet().toString() + "\"";
 		}
 		// extraVars += System.lineSeparator() + "shared_context: \"" + getContext().getSharedDataContext().consolidate().getData().toString() +"\"";
 	}
