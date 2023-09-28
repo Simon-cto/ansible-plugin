@@ -11,6 +11,7 @@ import com.rundeck.plugins.ansible.ansible.AnsibleDescribable.AuthenticationType
 import com.rundeck.plugins.ansible.ansible.AnsibleDescribable.BecomeMethodType;
 import com.dtolabs.rundeck.core.common.Framework;
 import com.dtolabs.rundeck.core.dispatcher.DataContextUtils;
+import com.dtolabs.rundeck.core.dispatcher.ContextView;
 import com.dtolabs.rundeck.core.execution.ExecutionContext;
 import com.dtolabs.rundeck.core.plugins.configuration.ConfigurationException;
 import com.dtolabs.rundeck.core.storage.ResourceMeta;
