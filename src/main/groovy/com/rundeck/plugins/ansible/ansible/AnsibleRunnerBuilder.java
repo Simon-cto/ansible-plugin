@@ -721,8 +721,6 @@ public class AnsibleRunnerBuilder {
 				}
 			}
 
-			extraVars += System.lineSeparator();
-
 			
 			// Set<String> contextKeys = getContext().getSharedDataContext().consolidate().getData(key).keySet();
 			// Iterator<String> contextKeysIterator = contextKeys.iterator();
@@ -737,6 +735,8 @@ public class AnsibleRunnerBuilder {
 	catch (Exception e){
 		extraVars += System.lineSeparator() + "shared_context: null";
 	}
+
+	extraVars += System.lineSeparator();
 	    
 	if (null != extraVars && extraVars.contains("${")) {
             return DataContextUtils.replaceDataReferences(extraVars, getContext().getDataContext());
